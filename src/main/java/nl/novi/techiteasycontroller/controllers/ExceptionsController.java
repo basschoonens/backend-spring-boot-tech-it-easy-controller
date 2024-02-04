@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 
 @ControllerAdvice
 public class ExceptionsController {
@@ -16,10 +15,3 @@ public class ExceptionsController {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
-//    // Make an exception handler
-//    @ExceptionHandler
-//    public String handleException(Exception e) {
-//        return "Er is iets fout gegaan: " + e.getMessage();
-//    }
-//
-//}
