@@ -1,5 +1,6 @@
 package nl.novi.techiteasycontroller.controllers;
 
+import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
