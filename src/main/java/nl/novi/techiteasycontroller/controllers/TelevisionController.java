@@ -19,13 +19,11 @@ public class TelevisionController {
         this.televisionRepository = televisionRepository;
     }
 
-
     // Get request to retrieve all televisions
     // Get request to retrieve a single television
     // Post request to add a new television
     // Put request to update an existing television
     // Delete request to delete an existing television
-
 
     @GetMapping()
     public ResponseEntity<List<Television>> getTelevisions() {
