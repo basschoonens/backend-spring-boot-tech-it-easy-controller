@@ -3,6 +3,7 @@ package nl.novi.techiteasycontroller.controllers;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
 import nl.novi.techiteasycontroller.models.Television;
 import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
+import nl.novi.techiteasycontroller.services.TelevisionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +14,10 @@ import java.util.Optional;
 @RequestMapping(value = "/api/televisions")
 public class TelevisionController {
 
-    private final TelevisionRepository televisionRepository;
+    private final TelevisionService televisionService;
 
-    public TelevisionController(TelevisionRepository televisionRepository) {
-        this.televisionRepository = televisionRepository;
+    public TelevisionController(TelevisionService televisionService, TelevisionRepository televisionRepository) {
+        this.televisionService = televisionService;
     }
 
     // Get request to retrieve all televisions
@@ -27,17 +28,34 @@ public class TelevisionController {
 
     @GetMapping()
     public ResponseEntity<List<Television>> getTelevisions() {
-        return ResponseEntity.ok(televisionRepository.findAll());
+        return ResponseEntity.ok(televisionService.getTelevisions());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Television> getTelevisionById(@PathVariable Long id) {
-        Optional<Television> optionalTelevision = televisionRepository.findById(id);
-        if (optionalTelevision.isEmpty()){
-            throw new RecordNotFoundException("This record is not available");
-        }
-        return ResponseEntity.ok(optionalTelevision.get());
+        Television television = televisionService.getTelevision(id);
+
+        return ResponseEntity.ok(television);
     }
+
+    //GET BY BRAND OR BY NAME EXERCISE//
+
+    @GetMapping
+    public ResponseEntity<List<Television>> getaTelevisionByBrand(@RequestParam(name = "brand", required = false) String brand, @RequestParam(name = "name", required = false) String name){
+        List<Television> televisions;
+        if (brand != null && name != null){
+            throw new RecordNotFoundException("Provide either brand or name");
+        } else if (brand != null){
+            televisions = televisionRepository.findByBrand(brand);
+        } else if (name != null){
+            televisions = televisionRepository.findByName(name);
+        } else {
+            televisions = televisionRepository.findAll();
+        }
+        return ResponseEntity.ok(televisions);
+    }
+
+    //GET BY BRAND OR BY NAME EXERCISE//
 
     @PostMapping()
     public ResponseEntity<Void> addTelevision(@RequestBody Television television) {
@@ -46,7 +64,7 @@ public class TelevisionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateTelevision(@PathVariable Long id, @RequestBody String television) {
+    public ResponseEntity<String> updateTelevision(@PathVariable Long id, @RequestBody Television television) {
         return ResponseEntity.noContent().build();
     }
 

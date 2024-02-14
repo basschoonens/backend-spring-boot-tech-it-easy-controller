@@ -3,7 +3,7 @@ package nl.novi.techiteasycontroller.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Televisions")
+@Table(name = "televisions")
 public class Television {
 
     @Id

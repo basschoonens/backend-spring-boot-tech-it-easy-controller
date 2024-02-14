@@ -10,4 +10,5 @@ public interface TelevisionRepository extends JpaRepository<Television, Long> {
     //return een Optional television
     // zoekmethodes aanpassen
     List<Television> findByBrand(String brand);
+    List<Television> findByName(String name);
 }
