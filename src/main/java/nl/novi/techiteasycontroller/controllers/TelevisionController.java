@@ -1,5 +1,8 @@
 package nl.novi.techiteasycontroller.controllers;
 
+import jakarta.validation.Valid;
+import nl.novi.techiteasycontroller.dtos.RequestTelevisionDto;
+import nl.novi.techiteasycontroller.dtos.ResponseTelevisionDto;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
 import nl.novi.techiteasycontroller.models.Television;
 import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
@@ -27,39 +30,39 @@ public class TelevisionController {
     // Delete request to delete an existing television
 
     @GetMapping()
-    public ResponseEntity<List<Television>> getTelevisions() {
+    public ResponseEntity<List<ResponseTelevisionDto>> getTelevisions() {
         return ResponseEntity.ok(televisionService.getTelevisions());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Television> getTelevisionById(@PathVariable Long id) {
-        Television television = televisionService.getTelevision(id);
+    public ResponseEntity<ResponseTelevisionDto> getTelevisionById(@PathVariable Long id) {
+        ResponseTelevisionDto television = televisionService.getTelevision(id);
 
         return ResponseEntity.ok(television);
     }
 
     //GET BY BRAND OR BY NAME EXERCISE//
 
-    @GetMapping
-    public ResponseEntity<List<Television>> getaTelevisionByBrand(@RequestParam(name = "brand", required = false) String brand, @RequestParam(name = "name", required = false) String name){
-        List<Television> televisions;
-        if (brand != null && name != null){
-            throw new RecordNotFoundException("Provide either brand or name");
-        } else if (brand != null){
-            televisions = televisionRepository.findByBrand(brand);
-        } else if (name != null){
-            televisions = televisionRepository.findByName(name);
-        } else {
-            televisions = televisionRepository.findAll();
-        }
-        return ResponseEntity.ok(televisions);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Television>> getAllTelevisionByBrand(@RequestParam(name = "brand", required = false) String brand, @RequestParam(name = "name", required = false) String name){
+//        List<Television> televisions;
+//        if (brand != null && name != null){
+//            throw new RecordNotFoundException("Provide either brand or name");
+//        } else if (brand != null){
+//            televisions = televisionRepository.findByBrand(brand);
+//        } else if (name != null){
+//            televisions = televisionRepository.findByName(name);
+//        } else {
+//            televisions = televisionRepository.findAll();
+//        }
+//        return ResponseEntity.ok(televisions);
+//    }
 
     //GET BY BRAND OR BY NAME EXERCISE//
 
     @PostMapping()
-    public ResponseEntity<Void> addTelevision(@RequestBody Television television) {
-        televisionRepository.save(television);
+    public ResponseEntity<Void> addTelevision(@Valid @RequestBody RequestTelevisionDto television) {
+        televisionService.saveTelevision(television);
         return ResponseEntity.created(null).build();
     }
 
