@@ -50,7 +50,7 @@ public class Television {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getBrand() {
@@ -171,5 +171,8 @@ public class Television {
 
     public void setSold(Integer sold) {
         this.sold = sold;
+    }
+
+    public void setId(Long id) {
     }
 }

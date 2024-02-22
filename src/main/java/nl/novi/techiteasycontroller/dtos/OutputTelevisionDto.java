@@ -1,6 +1,6 @@
 package nl.novi.techiteasycontroller.dtos;
 
-public class ResponseTelevisionDto {
+public class OutputTelevisionDto {
 
     private Long id;
     private String brand;
@@ -17,11 +17,11 @@ public class ResponseTelevisionDto {
     private Boolean bluetooth;
     private Boolean ambiLight;
 
-    public ResponseTelevisionDto() {
+    public OutputTelevisionDto() {
 
     }
 
-    public ResponseTelevisionDto(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight) {
+    public OutputTelevisionDto(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight) {
         this.id = id;
         this.brand = brand;
         this.name = name;

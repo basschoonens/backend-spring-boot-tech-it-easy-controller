@@ -1,10 +1,14 @@
 package nl.novi.techiteasycontroller.dtos;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
-public class RequestTelevisionDto {
+public class InputTelevisionDto {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     @NotNull
     private String brand;
     @NotNull
@@ -24,6 +28,13 @@ public class RequestTelevisionDto {
     private Integer originalStock;
     private Integer sold;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getBrand() {
         return brand;
     }
