@@ -51,32 +51,6 @@ public class TelevisionService {
         televisionRepository.save(toTelevision(dto, televisionFound.get()));
     }
 
-//    public void updateTelevision(Long id, InputTelevisionDto television) {
-//        Optional<Television> televisionFound = televisionRepository.findById(id);
-//        Television televisionToUpdate;
-//        if (televisionFound.isPresent()) {
-//            televisionToUpdate = televisionFound.get();
-//            televisionToUpdate.setBrand(television.getBrand());
-//            televisionToUpdate.setName(television.getName());
-//            televisionToUpdate.setPrice(television.getPrice());
-//            televisionToUpdate.setAvailableSize(television.getAvailableSize());
-//            televisionToUpdate.setRefreshRate(television.getRefreshRate());
-//            televisionToUpdate.setScreenType(television.getScreenType());
-//            televisionToUpdate.setScreenQuality(television.getScreenQuality());
-//            televisionToUpdate.setSmartTV(television.getSmartTV());
-//            televisionToUpdate.setWifi(television.getWifi());
-//            televisionToUpdate.setVoiceControl(television.getVoiceControl());
-//            televisionToUpdate.setHdr(television.getHdr());
-//            televisionToUpdate.setBluetooth(television.getBluetooth());
-//            televisionToUpdate.setAmbiLight(television.getAmbiLight());
-//
-//            televisionRepository.save(televisionToUpdate);
-//        } else {
-//            throw new RecordNotFoundException("Cannot find television");
-//        }
-//        televisionRepository.save(televisionToUpdate);
-//    }
-
     public void deleteTelevision(Long id) {
         Optional<Television> television = televisionRepository.findById(id);
         if (television.isEmpty()) {
@@ -115,18 +89,42 @@ public class TelevisionService {
         if (dto.getBrand() != null) {
             television.setBrand(dto.getBrand());
         }
-        television.setName(dto.getName());
-        television.setPrice(dto.getPrice());
-        television.setAvailableSize(dto.getAvailableSize());
-        television.setRefreshRate(dto.getRefreshRate());
-        television.setScreenType(dto.getScreenType());
-        television.setScreenQuality(dto.getScreenQuality());
-        television.setSmartTV(dto.getSmartTV());
-        television.setWifi(dto.getWifi());
-        television.setVoiceControl(dto.getVoiceControl());
-        television.setHdr(dto.getHdr());
-        television.setBluetooth(dto.getBluetooth());
-        television.setAmbiLight(dto.getAmbiLight());
+        if (dto.getName() != null) {
+            television.setName(dto.getName());
+        }
+        if (dto.getPrice() != null) {
+            television.setPrice(dto.getPrice());
+        }
+        if (dto.getAvailableSize() != null) {
+            television.setAvailableSize(dto.getAvailableSize());
+        }
+        if (dto.getRefreshRate() != null) {
+            television.setRefreshRate(dto.getRefreshRate());
+        }
+        if (dto.getScreenType() != null){
+            television.setScreenType(dto.getScreenType());
+        }
+        if (dto.getScreenQuality() != null) {
+            television.setScreenQuality(dto.getScreenQuality());
+        }
+        if (dto.getSmartTV() != null) {
+            television.setSmartTV(dto.getSmartTV());
+        }
+        if (dto.getWifi() != null) {
+            television.setWifi(dto.getWifi());
+        }
+        if (dto.getVoiceControl() != null) {
+            television.setVoiceControl(dto.getVoiceControl());
+        }
+        if (dto.getHdr() != null) {
+            television.setHdr(dto.getHdr());
+        }
+        if (dto.getBluetooth() != null) {
+            television.setBluetooth(dto.getBluetooth());
+        }
+        if (dto.getAmbiLight() != null) {
+            television.setAmbiLight(dto.getAmbiLight());
+        }
 
         return television;
     }
