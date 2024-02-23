@@ -3,8 +3,8 @@ package nl.novi.techiteasycontroller.controllers;
 import jakarta.validation.Valid;
 import nl.novi.techiteasycontroller.dtos.InputTelevisionDto;
 import nl.novi.techiteasycontroller.dtos.OutputTelevisionDto;
-import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
 import nl.novi.techiteasycontroller.services.TelevisionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,8 @@ public class TelevisionController {
 
     private final TelevisionService televisionService;
 
-    public TelevisionController(TelevisionService televisionService, TelevisionRepository televisionRepository) {
+    @Autowired
+    public TelevisionController(TelevisionService televisionService) {
         this.televisionService = televisionService;
     }
 
@@ -46,6 +47,7 @@ public class TelevisionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTelevision(@PathVariable Long id) {
+        televisionService.deleteTelevision(id);
         return ResponseEntity.noContent().build();
     }
 }

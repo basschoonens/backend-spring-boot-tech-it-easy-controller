@@ -51,18 +51,19 @@ _Let op_: het is uitdagender om jouw eigen stappenplan te maken. Mocht je niet z
 9. Maak in de `TelevisionController` een `@Autowired` om de `Service` te kunnen gebruiken in de `Controller`.
 10. Maak in het project een map aan genaamd `dtos`.
 11. Maak in deze map een klasse aan genaamd `TelevisionDto`.
-12. Definieer in deze klasse alle variabele die een `Television` object bevat (dezelfde als in het model gedefinieerd staan).
-13. Maak in de `TelevisionService` een `public` `static` functie aan genaamd _toTelevisionDto_. Deze heeft als returnwaarde `TelevisionDto` en als attribuut `Television television`. (Bonus: dit mag ook in een aparte TelevisionMapper klasse)
+12. Definieer in deze klasse alle variabele die een `Television` object bevat (dus dezelfde attributen die in het model gedefinieerd staan).
+13. Maak in de `TelevisionService` een `public` `static` functie aan genaamd _toTelevisionDto_. Deze heeft als returnwaarde `TelevisionDto` en als parameter `Television television`. (Bonus: dit mag ook in een aparte TelevisionMapper klasse)
 14. Maak in deze functie een `var dto = new TelevisionDto();`.
-15. Voeg in de functie voor iedere _variable_, die je boven deze functie hebt gedeclareerd een toewijzing naar de dto variable (bijvoorbeeld: `dto.name = television.getName();` ).
+15. Voeg in de functie voor iedere _variable_ van de TelevisionDto klasse een toewijzing naar de dto variable (bijvoorbeeld: `dto.setName(television.getName());` ).
 16. Return als laatste stap in deze functie het _dto_ object en sluit de functie af.
 17. Maak een klasse aan in de map `dtos` genaamd `TelevisionInputDto`.
 18. Definieer ook in deze klasse alle variabelen die een `Television` object bevat.
-19. Maak in de `TelevisionService` ook een `public` functie genaamd `toTelevision()` met returnwaarde `Television`.
+19. Maak in de `TelevisionService` ook een `public` functie genaamd _toTelevision_ met returnwaarde `Television` en als parametern `TelevisionDto dto`.
 20. Maak in deze functie een `var television = new Television();`.
-21. Voeg in de functie voor iedere _variable_, die in de Television hebt gedeclareerd, een toewijzing naar de television variabele (bijvoorbeeld: `television.setName(name);` ).
+21. Voeg in de functie voor iedere _variable_, die je in de Television klasse hebt gedeclareerd, een toewijzing naar de television variabele (bijvoorbeeld: `television.setName(dto.getName());` ).
 22. Pas de `RequestMappings` in de `TelevisionController` aan, zodat de controller het verzoek doet aan de _servicelaag_ en het response ook ontvangt van de _servicelaag_ (dit is omdat we de `Controller` eigenlijk zo dom mogelijk willen houden).
-23. Pas de _servicelaag_ zo aan dat deze gebruikmaakt van de gegevens die de _controllerlaag_ doorgeeft. De `Service` moet hier dan de logica aan toepassen om met gebruik van de `Dtos` een _returnwaarde_ terug te kunnen sturen naar de controller.
+23. Zorg dat je elke mapping die nu een `ResponseEntity<Television>` returned aanpast, zodat het een `ResponseEntity<TelevisionDto>` returned.
+24. Pas de _servicelaag_ zo aan dat deze gebruikmaakt van de gegevens die de _controllerlaag_ doorgeeft. De `Service` moet hier dan de logica aan toepassen om met gebruik van de `Dtos` een _returnwaarde_ terug te kunnen sturen naar de controller.
 
 
 ## Bonus

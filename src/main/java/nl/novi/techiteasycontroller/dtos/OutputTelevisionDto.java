@@ -1,5 +1,7 @@
 package nl.novi.techiteasycontroller.dtos;
 
+import nl.novi.techiteasycontroller.models.Television;
+
 public class OutputTelevisionDto {
 
     private Long id;
@@ -16,12 +18,15 @@ public class OutputTelevisionDto {
     private Boolean hdr;
     private Boolean bluetooth;
     private Boolean ambiLight;
+    private Integer originalStock;
+    private Integer sold;
+
 
     public OutputTelevisionDto() {
 
     }
 
-    public OutputTelevisionDto(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight) {
+    public OutputTelevisionDto(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
         this.id = id;
         this.brand = brand;
         this.name = name;
@@ -36,6 +41,8 @@ public class OutputTelevisionDto {
         this.hdr = hdr;
         this.bluetooth = bluetooth;
         this.ambiLight = ambiLight;
+        this.originalStock = originalStock;
+        this.sold = sold;
     }
 
     public Long getId() {
@@ -148,5 +155,21 @@ public class OutputTelevisionDto {
 
     public void setAmbiLight(Boolean ambiLight) {
         this.ambiLight = ambiLight;
+    }
+
+    public Integer getOriginalStock() {
+        return originalStock;
+    }
+
+    public void setOriginalStock(Integer originalStock) {
+        this.originalStock = originalStock;
+    }
+
+    public Integer getSold() {
+        return sold;
+    }
+
+    public void setSold(Integer sold) {
+        this.sold = sold;
     }
 }
