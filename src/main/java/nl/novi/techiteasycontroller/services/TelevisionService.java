@@ -2,6 +2,7 @@ package nl.novi.techiteasycontroller.services;
 
 import nl.novi.techiteasycontroller.dtos.InputTelevisionDto;
 import nl.novi.techiteasycontroller.dtos.OutputTelevisionDto;
+import nl.novi.techiteasycontroller.dtos.TelevisionSalesOutputDto;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
 import nl.novi.techiteasycontroller.models.Television;
 import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
@@ -77,6 +78,7 @@ public class TelevisionService {
         dto.setHdr(television.getHdr());
         dto.setBluetooth(television.getBluetooth());
         dto.setAmbiLight(television.getAmbiLight());
+        dto.setSold(television.getSold());
 
         return dto;
     }
@@ -125,9 +127,27 @@ public class TelevisionService {
         if (dto.getAmbiLight() != null) {
             television.setAmbiLight(dto.getAmbiLight());
         }
+        if (dto.getSold() != null){
+            television.setSold(dto.getSold());
+        }
 
         return television;
     }
 
+    public TelevisionSalesOutputDto getSalesInfoById(Long id) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
+        TelevisionSalesOutputDto tsod = new TelevisionSalesOutputDto();
+
+        if (optionalTelevision.isPresent()) {
+            Television television = optionalTelevision.get();
+            tsod.setId(television.getId());
+            tsod.setPrice(television.getPrice());
+            tsod.setOriginalStock(television.getOriginalStock());
+            tsod.setSold(television.getSold());
+            tsod.setProfit((int) (television.getSold() * television.getPrice()));
+        }
+
+        return tsod;
+    }
 }
 
