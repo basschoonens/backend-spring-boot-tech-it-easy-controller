@@ -1,8 +1,8 @@
 package nl.novi.techiteasycontroller.controllers;
 
 import jakarta.validation.Valid;
-import nl.novi.techiteasycontroller.dtos.InputTelevisionDto;
-import nl.novi.techiteasycontroller.dtos.OutputTelevisionDto;
+import nl.novi.techiteasycontroller.dtos.TelevisionDtoInput;
+import nl.novi.techiteasycontroller.dtos.TelevisionDtoOutput;
 import nl.novi.techiteasycontroller.dtos.TelevisionSalesOutputDto;
 import nl.novi.techiteasycontroller.services.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +23,25 @@ public class TelevisionController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<OutputTelevisionDto>> getTelevisions() {
+    public ResponseEntity<List<TelevisionDtoOutput>> getTelevisions() {
         return ResponseEntity.ok(televisionService.getTelevisions());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OutputTelevisionDto> getTelevisionById(@PathVariable Long id) {
-        OutputTelevisionDto television = televisionService.getTelevision(id);
+    public ResponseEntity<TelevisionDtoOutput> getTelevisionById(@PathVariable Long id) {
+        TelevisionDtoOutput television = televisionService.getTelevision(id);
 
         return ResponseEntity.ok(television);
     }
 
     @PostMapping()
-    public ResponseEntity<Void> addTelevision(@Valid @RequestBody InputTelevisionDto television) {
+    public ResponseEntity<Void> addTelevision(@Valid @RequestBody TelevisionDtoInput television) {
         televisionService.saveTelevision(television);
         return ResponseEntity.created(null).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateTelevision(@PathVariable Long id, @RequestBody InputTelevisionDto television) {
+    public ResponseEntity<Void> updateTelevision(@Valid @PathVariable Long id, @RequestBody TelevisionDtoInput television) {
         televisionService.updateTelevision(id, television);
         return ResponseEntity.noContent().build();
     }

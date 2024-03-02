@@ -4,7 +4,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
-public class InputTelevisionDto {
+public class TelevisionDtoInput {
 
     @Id
     @GeneratedValue

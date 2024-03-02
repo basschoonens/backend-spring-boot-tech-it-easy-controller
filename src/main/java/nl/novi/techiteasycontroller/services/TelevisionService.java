@@ -1,7 +1,7 @@
 package nl.novi.techiteasycontroller.services;
 
-import nl.novi.techiteasycontroller.dtos.InputTelevisionDto;
-import nl.novi.techiteasycontroller.dtos.OutputTelevisionDto;
+import nl.novi.techiteasycontroller.dtos.TelevisionDtoInput;
+import nl.novi.techiteasycontroller.dtos.TelevisionDtoOutput;
 import nl.novi.techiteasycontroller.dtos.TelevisionSalesOutputDto;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
 import nl.novi.techiteasycontroller.models.Television;
@@ -21,19 +21,19 @@ public class TelevisionService {
         this.televisionRepository = televisionRepository;
     }
 
-    public List<OutputTelevisionDto> getTelevisions() {
+    public List<TelevisionDtoOutput> getTelevisions() {
         List<Television> televisions = televisionRepository.findAll();
-        List<OutputTelevisionDto> televisionDtos = new ArrayList<>();
+        List<TelevisionDtoOutput> televisionDtos = new ArrayList<>();
 
         for (Television television : televisions) {
-           OutputTelevisionDto dto = toDto(television);
+           TelevisionDtoOutput dto = toDto(television);
             televisionDtos.add(dto);
         }
 
         return televisionDtos;
     }
 
-    public OutputTelevisionDto getTelevision(Long id) {
+    public TelevisionDtoOutput getTelevision(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         if (optionalTelevision.isEmpty()) {
             throw new RecordNotFoundException("Television with id " + id + " not found");
@@ -42,13 +42,16 @@ public class TelevisionService {
         }
     }
 
-    public void saveTelevision(InputTelevisionDto dto) {
+    public void saveTelevision(TelevisionDtoInput dto) {
         Television television = toTelevision(dto);
         televisionRepository.save(television);
     }
 
-    public void updateTelevision(Long id, InputTelevisionDto dto) {
+    public void updateTelevision(Long id, TelevisionDtoInput dto) {
         Optional<Television> televisionFound = televisionRepository.findById(id);
+        if (televisionFound.isEmpty()) {
+            throw new RecordNotFoundException("Television with id " + id + " not found");
+        }
         televisionRepository.save(toTelevision(dto, televisionFound.get()));
     }
 
@@ -62,8 +65,8 @@ public class TelevisionService {
     }
 
     // Mappers //
-    private OutputTelevisionDto toDto(Television television) {
-        OutputTelevisionDto dto = new OutputTelevisionDto();
+    private TelevisionDtoOutput toDto(Television television) {
+        TelevisionDtoOutput dto = new TelevisionDtoOutput();
         dto.setId(television.getId());
         dto.setBrand(television.getBrand());
         dto.setName(television.getName());
@@ -83,11 +86,11 @@ public class TelevisionService {
         return dto;
     }
 
-    private Television toTelevision(InputTelevisionDto dto){
+    private Television toTelevision(TelevisionDtoInput dto){
         return toTelevision(dto, new Television());
     }
 
-    private Television toTelevision(InputTelevisionDto dto, Television television)  {
+    private Television toTelevision(TelevisionDtoInput dto, Television television)  {
         if (dto.getBrand() != null) {
             television.setBrand(dto.getBrand());
         }
