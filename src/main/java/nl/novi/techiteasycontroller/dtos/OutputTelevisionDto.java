@@ -1,15 +1,10 @@
-package nl.novi.techiteasycontroller.models;
+package nl.novi.techiteasycontroller.dtos;
 
-import jakarta.persistence.*;
+import nl.novi.techiteasycontroller.models.Television;
 
-@Entity
-@Table(name = "televisions")
-public class Television {
+public class OutputTelevisionDto {
 
-    @Id
-    @GeneratedValue
     private Long id;
-    @Column(unique = false, nullable = false)
     private String brand;
     private String name;
     private Double price;
@@ -26,11 +21,12 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    public Television() {
+
+    public OutputTelevisionDto() {
 
     }
 
-    public Television(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
+    public OutputTelevisionDto(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
         this.id = id;
         this.brand = brand;
         this.name = name;
@@ -50,7 +46,11 @@ public class Television {
     }
 
     public Long getId() {
-        return this.id;
+        return id;
+    }
+
+    public void setId (Long id){
+        this.id = id;
     }
 
     public String getBrand() {
@@ -171,8 +171,5 @@ public class Television {
 
     public void setSold(Integer sold) {
         this.sold = sold;
-    }
-
-    public void setId(Long id) {
     }
 }
