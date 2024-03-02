@@ -1,6 +1,6 @@
 package nl.novi.techiteasycontroller.dtos;
 
-public class TelevisionSalesOutputDto {
+public class TelevisionSalesDtoOutput {
 
     private Long id;
     private Double price;

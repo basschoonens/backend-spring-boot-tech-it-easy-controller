@@ -2,9 +2,11 @@ package nl.novi.techiteasycontroller.services;
 
 import nl.novi.techiteasycontroller.dtos.TelevisionDtoInput;
 import nl.novi.techiteasycontroller.dtos.TelevisionDtoOutput;
-import nl.novi.techiteasycontroller.dtos.TelevisionSalesOutputDto;
+import nl.novi.techiteasycontroller.dtos.TelevisionSalesDtoOutput;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
+import nl.novi.techiteasycontroller.models.RemoteController;
 import nl.novi.techiteasycontroller.models.Television;
+import nl.novi.techiteasycontroller.repositories.RemoteControllerRepository;
 import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
         this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
     }
 
     public List<TelevisionDtoOutput> getTelevisions() {
@@ -137,9 +141,9 @@ public class TelevisionService {
         return television;
     }
 
-    public TelevisionSalesOutputDto getSalesInfoById(Long id) {
+    public TelevisionSalesDtoOutput getSalesInfoById(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
-        TelevisionSalesOutputDto tsod = new TelevisionSalesOutputDto();
+        TelevisionSalesDtoOutput tsod = new TelevisionSalesDtoOutput();
 
         if (optionalTelevision.isPresent()) {
             Television television = optionalTelevision.get();
@@ -151,6 +155,21 @@ public class TelevisionService {
         }
 
         return tsod;
+    }
+
+    public void assignRemoteController(Long televisionid, Long remotecontrollerid) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(televisionid);
+        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remotecontrollerid);
+
+        if (optionalTelevision.isPresent() && optionalRemoteController.isPresent()) {
+            Television television = optionalTelevision.get();
+            RemoteController remoteController = optionalRemoteController.get();
+
+            television.setRemoteController(remoteController);
+            televisionRepository.save(television);
+        } else {
+            throw new RecordNotFoundException("De televisie of remote controller kan niet worden gevonden.");
+        }
     }
 }
 

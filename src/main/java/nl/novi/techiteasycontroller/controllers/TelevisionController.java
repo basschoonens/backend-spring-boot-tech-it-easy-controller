@@ -3,7 +3,7 @@ package nl.novi.techiteasycontroller.controllers;
 import jakarta.validation.Valid;
 import nl.novi.techiteasycontroller.dtos.TelevisionDtoInput;
 import nl.novi.techiteasycontroller.dtos.TelevisionDtoOutput;
-import nl.novi.techiteasycontroller.dtos.TelevisionSalesOutputDto;
+import nl.novi.techiteasycontroller.dtos.TelevisionSalesDtoOutput;
 import nl.novi.techiteasycontroller.services.TelevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,8 +53,15 @@ public class TelevisionController {
     }
 
     @GetMapping("/sales/{id}")
-    public ResponseEntity<TelevisionSalesOutputDto> getSalesTelevisionInfo(@PathVariable Long id) {
-        TelevisionSalesOutputDto tsod = televisionService.getSalesInfoById(id);
+    public ResponseEntity<TelevisionSalesDtoOutput> getSalesTelevisionInfo(@PathVariable Long id) {
+        TelevisionSalesDtoOutput tsod = televisionService.getSalesInfoById(id);
         return ResponseEntity.ok(tsod);
     }
+
+    @PutMapping("/{televisionid}/remotecontroller/{remotecontrollerid}")
+    public ResponseEntity<Void> assignRemoteController(@PathVariable Long televisionid, @PathVariable Long remotecontrollerid) {
+        televisionService.assignRemoteController(televisionid, remotecontrollerid);
+        return ResponseEntity.noContent().build();
+    }
+
 }
