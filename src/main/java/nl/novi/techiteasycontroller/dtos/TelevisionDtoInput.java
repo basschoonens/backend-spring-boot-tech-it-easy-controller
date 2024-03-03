@@ -9,6 +9,8 @@ public class TelevisionDtoInput {
     @Id
     @GeneratedValue
     private Long id;
+
+    //TODO Annotaties uitzoeken welke er zijn en hoe verder werkt.
     @NotNull
     private String brand;
     @NotNull

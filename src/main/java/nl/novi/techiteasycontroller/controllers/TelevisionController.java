@@ -63,5 +63,4 @@ public class TelevisionController {
         televisionService.assignRemoteController(televisionid, remotecontrollerid);
         return ResponseEntity.noContent().build();
     }
-
 }

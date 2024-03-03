@@ -90,11 +90,11 @@ public class TelevisionService {
         return dto;
     }
 
-    private Television toTelevision(TelevisionDtoInput dto){
+    private Television toTelevision(TelevisionDtoInput dto) {
         return toTelevision(dto, new Television());
     }
 
-    private Television toTelevision(TelevisionDtoInput dto, Television television)  {
+    private Television toTelevision(TelevisionDtoInput dto, Television television) {
         if (dto.getBrand() != null) {
             television.setBrand(dto.getBrand());
         }

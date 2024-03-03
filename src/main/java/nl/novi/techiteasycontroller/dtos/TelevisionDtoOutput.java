@@ -19,7 +19,6 @@ public class TelevisionDtoOutput {
     private Integer originalStock;
     private Integer sold;
 
-
     public TelevisionDtoOutput() {
 
     }

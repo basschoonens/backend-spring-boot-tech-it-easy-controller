@@ -1,12 +1,21 @@
 package nl.novi.techiteasycontroller.dtos;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+
 public class RemoteControllerDtoInput {
 
+    @Id
+    @GeneratedValue
     private Long id;
     private String compatibleWith;
     private String batteryType;
+    @NotNull
     private String name;
+    @NotNull
     private String brand;
+    @NotNull
     private Double price;
     private Integer originalStock;
 

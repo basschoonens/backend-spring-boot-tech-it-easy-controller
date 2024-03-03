@@ -2,6 +2,8 @@ package nl.novi.techiteasycontroller.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "televisions")
 public class Television {
@@ -27,7 +29,7 @@ public class Television {
     private Integer sold;
 
     @OneToOne
-    private RemoteController remoteController;
+    RemoteController remoteController;
 
     public RemoteController getRemoteController() {
         return remoteController;

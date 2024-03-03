@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class RemoteController {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String compatibleWith;
     private String batteryType;
@@ -24,6 +24,14 @@ public class RemoteController {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Television getTelevision() {
+        return television;
+    }
+
+    public void setTelevision(Television television) {
+        this.television = television;
     }
 
     public String getCompatibleWith() {
