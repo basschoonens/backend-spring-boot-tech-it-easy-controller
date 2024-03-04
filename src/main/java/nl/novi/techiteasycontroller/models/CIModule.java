@@ -2,6 +2,8 @@ package nl.novi.techiteasycontroller.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cimodules")
 public class CIModule {
@@ -44,4 +46,8 @@ public class CIModule {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    @OneToMany(mappedBy = "ciModule")
+    List<Television> television;
+
 }

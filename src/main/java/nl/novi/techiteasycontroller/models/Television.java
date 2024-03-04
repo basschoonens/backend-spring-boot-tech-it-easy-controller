@@ -31,6 +31,18 @@ public class Television {
     @OneToOne
     RemoteController remoteController;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cimodule_id")
+    CIModule ciModule;
+
+    public CIModule getCiModule() {
+        return ciModule;
+    }
+
+    public void setCiModule(CIModule ciModule) {
+        this.ciModule = ciModule;
+    }
+
     public RemoteController getRemoteController() {
         return remoteController;
     }
