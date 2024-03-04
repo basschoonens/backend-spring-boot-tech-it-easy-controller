@@ -29,7 +29,7 @@ public class CIModuleController {
 
     @GetMapping("/{id}0")
     public ResponseEntity<CIModuleDtoOutput> getCiModuleById(@PathVariable Long id) {
-        CIModuleDtoOutput module = CIModuleService.getCiModule(id);
+        CIModuleDtoOutput module = ciModuleService.getCiModule(id);
 
         return ResponseEntity.ok(module);
     }

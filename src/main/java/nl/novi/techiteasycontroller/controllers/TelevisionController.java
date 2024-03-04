@@ -64,11 +64,10 @@ public class TelevisionController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO Assign CI Module to TV maken
-//    @PutMapping("/{televisionid}/cimodule/{cimoduleid}")
-//    public ResponseEntity<Void> assignCiModule(@PathVariable Long televisionid, @PathVariable Long cimoduleid) {
-//        televisionService.assignRemoteController(televisionid, remotecontrollerid);
-//        return ResponseEntity.noContent().build();
-//    }
+    @PutMapping("/{televisionid}/cimodule/{cimoduleid}")
+    public ResponseEntity<Void> assignCiModule(@PathVariable Long televisionid, @PathVariable Long cimoduleid) {
+        televisionService.assignRemoteController(televisionid, cimoduleid);
+        return ResponseEntity.noContent().build();
+    }
 
 }

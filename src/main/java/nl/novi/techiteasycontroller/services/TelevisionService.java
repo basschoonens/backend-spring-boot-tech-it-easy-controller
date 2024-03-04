@@ -40,7 +40,7 @@ public class TelevisionService {
     public TelevisionDtoOutput getTelevision(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         if (optionalTelevision.isEmpty()) {
-            throw new RecordNotFoundException("Television with id " + id + " not found");
+            throw new RecordNotFoundException("Television with id " + id + " not found.");
         } else {
             return toDto(optionalTelevision.get());
         }
