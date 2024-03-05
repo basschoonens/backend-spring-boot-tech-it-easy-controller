@@ -4,8 +4,10 @@ import nl.novi.techiteasycontroller.dtos.TelevisionDtoInput;
 import nl.novi.techiteasycontroller.dtos.TelevisionDtoOutput;
 import nl.novi.techiteasycontroller.dtos.TelevisionSalesDtoOutput;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
+import nl.novi.techiteasycontroller.models.CIModule;
 import nl.novi.techiteasycontroller.models.RemoteController;
 import nl.novi.techiteasycontroller.models.Television;
+import nl.novi.techiteasycontroller.repositories.CIModuleRepository;
 import nl.novi.techiteasycontroller.repositories.RemoteControllerRepository;
 import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,12 @@ public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
     private final RemoteControllerRepository remoteControllerRepository;
+    private final CIModuleRepository ciModuleRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModuleRepository ciModuleRepository) {
         this.televisionRepository = televisionRepository;
         this.remoteControllerRepository = remoteControllerRepository;
+        this.ciModuleRepository = ciModuleRepository;
     }
 
     public List<TelevisionDtoOutput> getTelevisions() {
@@ -86,6 +90,8 @@ public class TelevisionService {
         dto.setBluetooth(television.getBluetooth());
         dto.setAmbiLight(television.getAmbiLight());
         dto.setSold(television.getSold());
+        dto.setRemoteid(television.getRemoteController().getId());
+        dto.setCimoduleid(television.getCiModule().getId());
 
         return dto;
     }
@@ -171,5 +177,22 @@ public class TelevisionService {
             throw new RecordNotFoundException("De televisie of remote controller kan niet worden gevonden.");
         }
     }
+
+    public void assignCiModule(Long televisionid, Long cimoduleid) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(televisionid);
+        Optional<CIModule> optionalModule = ciModuleRepository.findById(cimoduleid);
+
+        if (optionalTelevision.isPresent() && optionalModule.isPresent()) {
+            Television television = optionalTelevision.get();
+            CIModule module = optionalModule.get();
+
+            television.setCiModule(module);
+            televisionRepository.save(television);
+        } else {
+            throw new RecordNotFoundException("De televisie of ci-module kan niet worden gevonden.");
+        }
+    }
+
+
 }
 

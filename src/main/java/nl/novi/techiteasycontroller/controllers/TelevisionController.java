@@ -58,18 +58,16 @@ public class TelevisionController {
         return ResponseEntity.ok(tsod);
     }
 
-    @PutMapping("/{televisionid}/remotecontroller/{remotecontrollerid}")
+    @PutMapping("/{televisionid}/remotecontrollers/{remotecontrollerid}")
     public ResponseEntity<Void> assignRemoteController(@PathVariable Long televisionid, @PathVariable Long remotecontrollerid) {
         televisionService.assignRemoteController(televisionid, remotecontrollerid);
         return ResponseEntity.noContent().build();
     }
 
-    //TODO Assign CI-Module to TV navragen Mark. Deze koppelt niet aan de tv.
-
-//    @PutMapping("/{televisionid}/cimodule/{cimoduleid}")
-//    public ResponseEntity<Void> assignCiModule(@PathVariable Long televisionid, @PathVariable Long cimoduleid) {
-//        televisionService.assignRemoteController(televisionid, cimoduleid);
-//        return ResponseEntity.noContent().build();
-//    }
+    @PutMapping("/{televisionid}/cimodules/{cimoduleid}")
+    public ResponseEntity<Void> assignCiModule(@PathVariable Long televisionid, @PathVariable Long cimoduleid) {
+        televisionService.assignCiModule(televisionid, cimoduleid);
+        return ResponseEntity.noContent().build();
+    }
 
 }

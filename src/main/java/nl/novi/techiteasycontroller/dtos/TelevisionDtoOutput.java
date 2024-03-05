@@ -1,5 +1,8 @@
 package nl.novi.techiteasycontroller.dtos;
 
+import nl.novi.techiteasycontroller.models.CIModule;
+import nl.novi.techiteasycontroller.models.RemoteController;
+
 public class TelevisionDtoOutput {
 
     private Long id;
@@ -18,6 +21,9 @@ public class TelevisionDtoOutput {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
+    private Long remoteid;
+    private Long cimoduleid;
+
 
     public TelevisionDtoOutput() {
 
@@ -168,5 +174,21 @@ public class TelevisionDtoOutput {
 
     public void setSold(Integer sold) {
         this.sold = sold;
+    }
+
+    public Long getRemoteid() {
+        return remoteid;
+    }
+
+    public void setRemoteid(Long remoteid) {
+        this.remoteid = remoteid;
+    }
+
+    public Long getCimoduleid() {
+        return cimoduleid;
+    }
+
+    public void setCimoduleid(Long cimoduleid) {
+        this.cimoduleid = cimoduleid;
     }
 }

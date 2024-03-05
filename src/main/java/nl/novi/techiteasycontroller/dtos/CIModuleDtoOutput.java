@@ -7,6 +7,8 @@ public class CIModuleDtoOutput {
     private String type;
     private Double price;
 
+    //TODO List of televisions toevoegen.
+
     public Long getId() {
         return id;
     }
