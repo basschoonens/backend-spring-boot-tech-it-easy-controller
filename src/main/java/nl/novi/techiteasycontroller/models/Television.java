@@ -2,6 +2,8 @@ package nl.novi.techiteasycontroller.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "televisions")
 public class Television {
@@ -26,27 +28,27 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    public Television() {
+    @OneToOne
+    RemoteController remoteController;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cimodule_id")
+    CIModule ciModule;
+
+    public CIModule getCiModule() {
+        return ciModule;
     }
 
-    public Television(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.id = id;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTV = smartTV;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
+    public void setCiModule(CIModule ciModule) {
+        this.ciModule = ciModule;
+    }
+
+    public RemoteController getRemoteController() {
+        return remoteController;
+    }
+
+    public void setRemoteController(RemoteController remoteController) {
+        this.remoteController = remoteController;
     }
 
     public Long getId() {

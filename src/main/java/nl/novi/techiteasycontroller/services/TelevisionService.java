@@ -1,10 +1,14 @@
 package nl.novi.techiteasycontroller.services;
 
-import nl.novi.techiteasycontroller.dtos.InputTelevisionDto;
-import nl.novi.techiteasycontroller.dtos.OutputTelevisionDto;
-import nl.novi.techiteasycontroller.dtos.TelevisionSalesOutputDto;
+import nl.novi.techiteasycontroller.dtos.TelevisionDtoInput;
+import nl.novi.techiteasycontroller.dtos.TelevisionDtoOutput;
+import nl.novi.techiteasycontroller.dtos.TelevisionSalesDtoOutput;
 import nl.novi.techiteasycontroller.exceptions.RecordNotFoundException;
+import nl.novi.techiteasycontroller.models.CIModule;
+import nl.novi.techiteasycontroller.models.RemoteController;
 import nl.novi.techiteasycontroller.models.Television;
+import nl.novi.techiteasycontroller.repositories.CIModuleRepository;
+import nl.novi.techiteasycontroller.repositories.RemoteControllerRepository;
 import nl.novi.techiteasycontroller.repositories.TelevisionRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,39 +20,46 @@ import java.util.Optional;
 public class TelevisionService {
 
     private final TelevisionRepository televisionRepository;
+    private final RemoteControllerRepository remoteControllerRepository;
+    private final CIModuleRepository ciModuleRepository;
 
-    public TelevisionService(TelevisionRepository televisionRepository) {
+    public TelevisionService(TelevisionRepository televisionRepository, RemoteControllerRepository remoteControllerRepository, CIModuleRepository ciModuleRepository) {
         this.televisionRepository = televisionRepository;
+        this.remoteControllerRepository = remoteControllerRepository;
+        this.ciModuleRepository = ciModuleRepository;
     }
 
-    public List<OutputTelevisionDto> getTelevisions() {
+    public List<TelevisionDtoOutput> getTelevisions() {
         List<Television> televisions = televisionRepository.findAll();
-        List<OutputTelevisionDto> televisionDtos = new ArrayList<>();
+        List<TelevisionDtoOutput> televisionDtos = new ArrayList<>();
 
         for (Television television : televisions) {
-           OutputTelevisionDto dto = toDto(television);
+           TelevisionDtoOutput dto = toDto(television);
             televisionDtos.add(dto);
         }
 
         return televisionDtos;
     }
 
-    public OutputTelevisionDto getTelevision(Long id) {
+    public TelevisionDtoOutput getTelevision(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         if (optionalTelevision.isEmpty()) {
-            throw new RecordNotFoundException("Television with id " + id + " not found");
+            throw new RecordNotFoundException("Television with id " + id + " not found.");
         } else {
             return toDto(optionalTelevision.get());
         }
     }
 
-    public void saveTelevision(InputTelevisionDto dto) {
+    public void saveTelevision(TelevisionDtoInput dto) {
         Television television = toTelevision(dto);
         televisionRepository.save(television);
     }
 
-    public void updateTelevision(Long id, InputTelevisionDto dto) {
+    public void updateTelevision(Long id, TelevisionDtoInput dto) {
         Optional<Television> televisionFound = televisionRepository.findById(id);
+        if (televisionFound.isEmpty()) {
+            throw new RecordNotFoundException("Television with id " + id + " not found");
+        }
         televisionRepository.save(toTelevision(dto, televisionFound.get()));
     }
 
@@ -62,9 +73,9 @@ public class TelevisionService {
     }
 
     // Mappers //
-    private OutputTelevisionDto toDto(Television television) {
-        OutputTelevisionDto dto = new OutputTelevisionDto();
-        dto.setId(television.getId());
+    private TelevisionDtoOutput toDto(Television television) {
+        TelevisionDtoOutput dto = new TelevisionDtoOutput();
+        dto.setId(  television.getId());
         dto.setBrand(television.getBrand());
         dto.setName(television.getName());
         dto.setPrice(television.getPrice());
@@ -79,15 +90,17 @@ public class TelevisionService {
         dto.setBluetooth(television.getBluetooth());
         dto.setAmbiLight(television.getAmbiLight());
         dto.setSold(television.getSold());
+        dto.setRemoteid(television.getRemoteController().getId());
+        dto.setCimoduleid(television.getCiModule().getId());
 
         return dto;
     }
 
-    private Television toTelevision(InputTelevisionDto dto){
+    private Television toTelevision(TelevisionDtoInput dto) {
         return toTelevision(dto, new Television());
     }
 
-    private Television toTelevision(InputTelevisionDto dto, Television television)  {
+    private Television toTelevision(TelevisionDtoInput dto, Television television) {
         if (dto.getBrand() != null) {
             television.setBrand(dto.getBrand());
         }
@@ -134,9 +147,9 @@ public class TelevisionService {
         return television;
     }
 
-    public TelevisionSalesOutputDto getSalesInfoById(Long id) {
+    public TelevisionSalesDtoOutput getSalesInfoById(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
-        TelevisionSalesOutputDto tsod = new TelevisionSalesOutputDto();
+        TelevisionSalesDtoOutput tsod = new TelevisionSalesDtoOutput();
 
         if (optionalTelevision.isPresent()) {
             Television television = optionalTelevision.get();
@@ -149,5 +162,37 @@ public class TelevisionService {
 
         return tsod;
     }
+
+    public void assignRemoteController(Long televisionid, Long remotecontrollerid) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(televisionid);
+        Optional<RemoteController> optionalRemoteController = remoteControllerRepository.findById(remotecontrollerid);
+
+        if (optionalTelevision.isPresent() && optionalRemoteController.isPresent()) {
+            Television television = optionalTelevision.get();
+            RemoteController remoteController = optionalRemoteController.get();
+
+            television.setRemoteController(remoteController);
+            televisionRepository.save(television);
+        } else {
+            throw new RecordNotFoundException("De televisie of remote controller kan niet worden gevonden.");
+        }
+    }
+
+    public void assignCiModule(Long televisionid, Long cimoduleid) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(televisionid);
+        Optional<CIModule> optionalModule = ciModuleRepository.findById(cimoduleid);
+
+        if (optionalTelevision.isPresent() && optionalModule.isPresent()) {
+            Television television = optionalTelevision.get();
+            CIModule module = optionalModule.get();
+
+            television.setCiModule(module);
+            televisionRepository.save(television);
+        } else {
+            throw new RecordNotFoundException("De televisie of ci-module kan niet worden gevonden.");
+        }
+    }
+
+
 }
 

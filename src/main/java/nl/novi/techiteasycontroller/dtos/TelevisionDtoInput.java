@@ -1,12 +1,21 @@
 package nl.novi.techiteasycontroller.dtos;
 
-import nl.novi.techiteasycontroller.models.Television;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 
-public class OutputTelevisionDto {
+public class TelevisionDtoInput {
 
+    @Id
+    @GeneratedValue
     private Long id;
+
+    //TODO Annotaties uitzoeken; welke zijn er en hoe werken ze.
+    @NotNull
     private String brand;
+    @NotNull
     private String name;
+    @NotNull
     private Double price;
     private Double availableSize;
     private Double refreshRate;
@@ -20,38 +29,6 @@ public class OutputTelevisionDto {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
-
-
-    public OutputTelevisionDto() {
-
-    }
-
-    public OutputTelevisionDto(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.id = id;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTV = smartTV;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId (Long id){
-        this.id = id;
-    }
 
     public String getBrand() {
         return brand;

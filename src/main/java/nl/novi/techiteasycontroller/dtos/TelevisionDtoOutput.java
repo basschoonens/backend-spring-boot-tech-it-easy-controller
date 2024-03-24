@@ -1,19 +1,13 @@
 package nl.novi.techiteasycontroller.dtos;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import nl.novi.techiteasycontroller.models.CIModule;
+import nl.novi.techiteasycontroller.models.RemoteController;
 
-public class InputTelevisionDto {
+public class TelevisionDtoOutput {
 
-    @Id
-    @GeneratedValue
     private Long id;
-    @NotNull
     private String brand;
-    @NotNull
     private String name;
-    @NotNull
     private Double price;
     private Double availableSize;
     private Double refreshRate;
@@ -27,6 +21,40 @@ public class InputTelevisionDto {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
+    private Long remoteid;
+    private Long cimoduleid;
+
+
+    public TelevisionDtoOutput() {
+
+    }
+
+    public TelevisionDtoOutput(Long id, String brand, String name, Double price, Double availableSize, Double refreshRate, String screenType, String screenQuality, Boolean smartTV, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
+        this.id = id;
+        this.brand = brand;
+        this.name = name;
+        this.price = price;
+        this.availableSize = availableSize;
+        this.refreshRate = refreshRate;
+        this.screenType = screenType;
+        this.screenQuality = screenQuality;
+        this.smartTV = smartTV;
+        this.wifi = wifi;
+        this.voiceControl = voiceControl;
+        this.hdr = hdr;
+        this.bluetooth = bluetooth;
+        this.ambiLight = ambiLight;
+        this.originalStock = originalStock;
+        this.sold = sold;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId (Long id){
+        this.id = id;
+    }
 
     public String getBrand() {
         return brand;
@@ -146,5 +174,21 @@ public class InputTelevisionDto {
 
     public void setSold(Integer sold) {
         this.sold = sold;
+    }
+
+    public Long getRemoteid() {
+        return remoteid;
+    }
+
+    public void setRemoteid(Long remoteid) {
+        this.remoteid = remoteid;
+    }
+
+    public Long getCimoduleid() {
+        return cimoduleid;
+    }
+
+    public void setCimoduleid(Long cimoduleid) {
+        this.cimoduleid = cimoduleid;
     }
 }
