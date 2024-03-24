@@ -75,7 +75,7 @@ public class TelevisionService {
     // Mappers //
     private TelevisionDtoOutput toDto(Television television) {
         TelevisionDtoOutput dto = new TelevisionDtoOutput();
-        dto.setId(television.getId());
+        dto.setId(  television.getId());
         dto.setBrand(television.getBrand());
         dto.setName(television.getName());
         dto.setPrice(television.getPrice());
